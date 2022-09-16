@@ -1,0 +1,59 @@
+<html>
+    <head>
+    </head>
+
+    <body>
+        <div>
+         
+            <h1> HEADING</h1>
+            <p id="myText">This is my text</p>
+            <input id="myButton" type="button" value="START"  onclick="startInput()">
+
+        </div>
+    </body>
+
+</html>
+
+<script>
+    function startInput() {
+        let movies = new Array();
+        let prompts = [
+            "Movie Name", 
+            "Release Date", 
+            "Run Time", 
+            "Rating (with description of why that rating was given)",
+            "Cast",
+            "Director",
+            "Genre",
+            "Synopsis",
+        ];
+
+        movieCount = 0;
+        let movieName = '';
+        while (true) {
+            movies[movieCount] = new Array(); 
+            movies[movieCount][0] = prompt(prompts[0]);
+            if (movies[movieCount][0] === "quit") break;
+
+            for (let j = 1; j <= prompts.length - 1; j++) {
+                movies[movieCount][j] = prompt(prompts[j]);
+            }
+        
+            movieCount++;
+        }
+
+        let output = '';
+        for (let i = 0; i < movieCount; i++) {
+            output = output + "Movie: # " + (i+1) + "<br />";
+            for (let j = 0; j <= prompts.length - 1; j++) {
+                output = output + prompts[j] + ": " + movies[i][j] + "<br />";
+            }
+        }
+
+
+    
+
+        document.getElementById("myText").innerHTML = output;
+        document.getElementById("myButton").style.visibility="hidden";
+    }
+</script>
