@@ -15,22 +15,37 @@
 </html>
 
 <script>
+
+    function compareFn(a, b) {
+        // a is less than b by some ordering criterion
+        if (a[0] < b[0]) {
+            return -1;
+        }
+        // a is greater than b by the ordering criterio
+        if (a[0] > b[0]) {
+            return 1;
+        }
+        // a must be equal to b
+        return 0;
+    }
+
     function startInput() {
+        // declare and initialize variables
         let movies = new Array();
         let prompts = [
             "Movie Name", 
-            "Release Date", 
-            "Run Time", 
-            "Rating (with description of why that rating was given)",
-            "Cast",
-            "Director",
-            "Genre",
-            "Synopsis",
+            // "Release Date", 
+            // "Run Time", 
+            // "Rating (with description of why that rating was given)",
+            // "Cast",
+            // "Director",
+            // "Genre",
+            // "Synopsis",
         ];
 
+        // Input movie information
         movieCount = 0;
-        let movieName = '';
-        while (true) {
+        while (movieCount < 100) {
             movies[movieCount] = new Array(); 
             movies[movieCount][0] = prompt(prompts[0]);
             if (movies[movieCount][0] === "quit") break;
@@ -42,17 +57,20 @@
             movieCount++;
         }
 
+        // sort movies by Movie Name
+        movies.sort(compareFn)
+
+        // build movies output as a string
         let output = '';
         for (let i = 0; i < movieCount; i++) {
             output = output + "Movie: # " + (i+1) + "<br />";
             for (let j = 0; j <= prompts.length - 1; j++) {
                 output = output + prompts[j] + ": " + movies[i][j] + "<br />";
             }
+            output = output + "---------------------------------------------------------------" + "<br />"
         }
 
-
-    
-
+        // display sorted movie array in browser window
         document.getElementById("myText").innerHTML = output;
         document.getElementById("myButton").style.visibility="hidden";
     }
