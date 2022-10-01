@@ -1,21 +1,89 @@
-<!DOCTYPE html>
+
 <html>
     <head>
   
-        <script>
-            let score1 = 0
-            function rollDice() {
-                document.getElementById("scores").innerHTML = "Score: " + score1;
-            }
-        </script>
-    
     </head>
   
     <body>
 
         <h1>Dice roll game</h1>
+        <p>Click button to roll, get the highest score before one player rolls snake eyes or gets to 50!</p>
         <p id="scores">No scores yet</p>
-        <button onClick="rollDice()">Roll</button>
+        <p id="winner"></p>
+        <p id="mydice">No dice rolls yet<br /> </p>
+        <input id="rollButton1" type="button" value="Player 1 Roll" onClick="player1Roll()" />
+        <input id="rollButton2" type="button" value="Player 2 Roll" onClick="player2Roll()" disabled />
+        
 
     </body>
+
 </html>
+
+
+
+
+<script>
+
+    let score1 = 0;
+    let score2 = 0;
+    let die1 = 0;
+    let die2 = 0;
+    
+    function rollDice() {
+         die1 = Math.ceil(Math.random() * 6);
+         die2 = Math.ceil(Math.random() * 6);
+        
+        document.getElementById("mydice").innerHTML = "Dice 1: " + die1 + " Dice 2: " + die2;
+
+        return die1 + die2
+       
+    
+    }
+
+    function showScores() {
+        // Show new scores in DOM
+        document.getElementById("scores").innerHTML = "Score 1: " + score1 + "&nbsp; &nbsp; Score 2: " + score2;
+
+        // If (game  over)
+        if ( (die1 === 1 && die2 === 1) || (score1 >= 50 || score2 >= 50) )  {
+            if (score1 > score2) {
+                document.getElementById("winner").innerHTML = "Player 1 Wins!";
+            } else if (score2 > score1) {
+                document.getElementById("winner").innerHTML = "Player 2 Wins!";
+            } else {
+                document.getElementById("winner").innerHTML = "Woah you Tied!";
+            }
+
+            document.getElementById("rollButton1").style.visibility="hidden";
+            document.getElementById("rollButton2").style.visibility="hidden";
+        } 
+    }
+
+    function player1Roll() {
+        // Both dice roll
+        let roll = rollDice()
+   
+        // Calculate change in score1
+        score1 += roll
+
+        // Inactivate player 1 button and activate player2 button
+        document.getElementById("rollButton1").disabled = true;
+        document.getElementById("rollButton2").disabled = false;
+
+        showScores()
+    }
+
+    function player2Roll() {
+        // Both dice roll
+        let roll = rollDice()
+   
+        // Calculate change in score1
+        score2 += roll
+
+        // Inactivate player 2 button and activate player1 button
+        document.getElementById("rollButton1").disabled = false;
+        document.getElementById("rollButton2").disabled = true;
+
+        showScores()
+    }
+</script>
