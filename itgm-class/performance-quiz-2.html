@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+              padding-left: 5px;
+              padding-right: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="myForm">
+            <input id="title" type="input" value="test 1" /> <br />
+            <input id="venue" type="input" value="test 2" /> <br />
+            <input id="street" type="input" value="test 3" /> <br />
+            <input id="address" type="input" value="test 4" /> <br />
+            <input id="city" type="input" value="test 5" /> <br />
+            <input id="state" type="input" value="test 6" /> <br />
+            <input id="zip" type="input" value="test 7" /> <br />
+            <input id="dateOfShow" type="input" value="test 8" /> <br />
+            <input id="time of show" type="input" value="test 9" /> <br />
+            <input id="price of entry" type="input" value="test 10" /> <br />
+            <input id="phone number" type="input" value="test 11" /> <br />
+            <input id="website" type="input" value="test 12" /> <br />
+            <input id="otherBands" type="input" value="test 13" /> <br />
+
+            <input id="add" type="button" value="Add Event" onclick="addEvent()"/> <br />
+
+        </form>
+
+        <div id="output" />
+
+
+    </body>
+</html>
+
+<script>
+    function Event(title, venue, /* ... */ dateOfShow) {  // capital E Event is a constructor for Event instances
+        this.title = title;
+        this.venue = venue;
+        // ...
+        this.dateOfShow = dateOfShow;
+    }
+
+    Event.prototype.getHTML = function() {  // .getHTMLRow() is a method attached to the Event prototype
+        let html = '<table>'
+        html += '<tr><td>Title:</td><td>' + this.title + '</td></tr>';
+        html += '<tr><td>Venue:</td><td>' + this.venue + '</td></tr>';
+        //spaces...
+        html += '</table>';
+
+        return html;
+    }
+
+    let allEvents = new Array();
+
+    function addEvent() {  // onclick javascript-event handler for the "Add Event" button
+        let title = document.getElementById("title").value;
+        let venue = document.getElementById("venue").value;
+        // ...
+        
+        let event = new Event(title, venue, /* ... */);
+        allEvents.push(event);
+
+        // Now let's update the screen by rendering allEvents as a table
+        let tempOutput = ''
+
+        // for each row
+        for (let i = 0; i < allEvents.length; i++) {
+            tempOutput += '<h2>Show #' + (i+1) + '</h2>';
+            tempOutput += allEvents[i].getHTML();
+            tempOutput += '<br />'
+        };
+
+        document.getElementById("output").innerHTML = tempOutput;
+
+    }
+
+
+</script>
