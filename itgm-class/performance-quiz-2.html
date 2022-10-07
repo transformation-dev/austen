@@ -11,19 +11,18 @@
     </head>
     <body>
         <form id="myForm">
-            <input id="title" type="input" value="test 1" /> <br />
-            <input id="venue" type="input" value="test 2" /> <br />
-            <input id="street" type="input" value="test 3" /> <br />
-            <input id="address" type="input" value="test 4" /> <br />
-            <input id="city" type="input" value="test 5" /> <br />
-            <input id="state" type="input" value="test 6" /> <br />
-            <input id="zip" type="input" value="test 7" /> <br />
-            <input id="dateOfShow" type="input" value="test 8" /> <br />
-            <input id="time of show" type="input" value="test 9" /> <br />
-            <input id="price of entry" type="input" value="test 10" /> <br />
-            <input id="phone number" type="input" value="test 11" /> <br />
-            <input id="website" type="input" value="test 12" /> <br />
-            <input id="otherBands" type="input" value="test 13" /> <br />
+            <input id="title" type="input" value="Enter Title" /> <br />
+            <input id="venue" type="input" value="Enter Venu" /> <br />
+            <input id="address" type="input" value="Enter Address" /> <br />
+            <input id="city" type="input" value="Enter City" /> <br />
+            <input id="state" type="input" value="Enter State" /> <br />
+            <input id="zip" type="input" value="Enter Zip" /> <br />
+            <input id="dateOfShow" type="input" value="Enter Date of Show" /> <br />
+            <input id="timeOfShow" type="input" value="Enter Time of Show" /> <br />
+            <input id="priceOfEntry" type="input" value="Enter Price of Entry" /> <br />
+            <input id="phoneNumber" type="input" value="Enter Phone Number" /> <br />
+            <input id="website" type="input" value="Enter Website" /> <br />
+            <input id="otherBands" type="input" value="Enter other Bands" /> <br />
 
             <input id="add" type="button" value="Add Event" onclick="addEvent()"/> <br />
 
@@ -36,18 +35,35 @@
 </html>
 
 <script>
-    function Event(title, venue, /* ... */ dateOfShow) {  // capital E Event is a constructor for Event instances
+    function Event(title, venue, address, city, state, zip, dateOfShow, timeOfShow, priceOfEntry, phoneNumber, website, otherBands) {  // capital E Event is a constructor for Event instances
         this.title = title;
         this.venue = venue;
-        // ...
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
         this.dateOfShow = dateOfShow;
+        this.timeOfShow = timeOfShow;
+        this.priceOfEntry = priceOfEntry;
+        this.phoneNumber = phoneNumber;
+        this.website = website;
+        this.otherBands = otherBands;
     }
 
     Event.prototype.getHTML = function() {  // .getHTMLRow() is a method attached to the Event prototype
         let html = '<table>'
         html += '<tr><td>Title:</td><td>' + this.title + '</td></tr>';
         html += '<tr><td>Venue:</td><td>' + this.venue + '</td></tr>';
-        //spaces...
+        html += '<tr><td>Address:</td><td>' + this.address + '</td></tr>';
+        html += '<tr><td>City:</td><td>' + this.city + '</td></tr>';
+        html += '<tr><td>State:</td><td>' + this.state + '</td></tr>';
+        html += '<tr><td>Zip:</td><td>' + this.zip + '</td></tr>';
+        html += '<tr><td>Date of Show:</td><td>' + this.dateOfShow + '</td></tr>';
+        html += '<tr><td>Time of Show:</td><td>' + this.timeOfShow + '</td></tr>';
+        html += '<tr><td>Price of Entry:</td><td>' + this.priceOfEntry + '</td></tr>';
+        html += '<tr><td>Phone Number:</td><td>' + this.phoneNumber + '</td></tr>';
+        html += '<tr><td>Website:</td><td>' + this.website + '</td></tr>';
+        html += '<tr><td>Other Bands:</td><td>' + this.otherBands + '</td></tr>';
         html += '</table>';
 
         return html;
@@ -58,9 +74,18 @@
     function addEvent() {  // onclick javascript-event handler for the "Add Event" button
         let title = document.getElementById("title").value;
         let venue = document.getElementById("venue").value;
-        // ...
+        let address = document.getElementById("address").value;
+        let city = document.getElementById("city").value;
+        let state = document.getElementById("state").value;
+        let zip = document.getElementById("zip").value;
+        let dateOfShow = document.getElementById("dateOfShow").value;
+        let timeOfShow = document.getElementById("timeOfShow").value;
+        let priceOfEntry = document.getElementById("priceOfEntry").value;
+        let phoneNumber = document.getElementById("phoneNumber").value;
+        let website = document.getElementById("website").value;
+        let otherBands = document.getElementById("otherBands").value;
         
-        let event = new Event(title, venue, /* ... */);
+        let event = new Event(title, venue, address, city, state, zip, dateOfShow, timeOfShow, priceOfEntry, phoneNumber, website, otherBands);
         allEvents.push(event);
 
         // Now let's update the screen by rendering allEvents as a table

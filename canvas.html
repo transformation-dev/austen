@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Canvas Example</title>
+</head>
+
+<body>
+<!-- set up the Cavas element
+if it does not exist the text Canvas is not support
+will be displayed -->
+	<canvas id = "canvas" width = "400" height = "400">
+		Canvas is not supported.
+    </canvas>
+    
+<script src="script.js"></script>
+</body>
+</html>
+<script>
+	//wait till the window is loaded before performining
+	//the init() function
+	window.onload=init;
+	
+	//this draws on the canvas element
+	function init() {
+		//first get the canvas element
+		var can = document.getElementById("canvas");
+		//we will drawing in 2d
+		var ctx = can.getContext("2d");
+		
+		//draw a circle
+		ctx.strokeStyle = "#000000";
+		ctx.fillStyle = "#FFFF00";
+		ctx.beginPath();
+		ctx.arc(200,200,150,0,Math.PI*2);
+		ctx.closePath();
+		ctx.fill();
+		ctx.stroke();
+		
+		//draw the left eye
+		ctx.fillStyle = "#000000";
+		ctx.beginPath();
+		ctx.arc(150,130,50,0,Math.PI);
+		ctx.closePath();
+		ctx.fill();
+		ctx.stroke();
+		
+		//draw the right eye
+		ctx.beginPath();
+		ctx.arc(250,130,50,0,Math.PI);
+		ctx.closePath();
+		ctx.fill();
+		ctx.stroke();
+		
+		//draw the smile
+		ctx.lineWidth= 10;
+		ctx.lineCap="round";
+		ctx.beginPath();
+		ctx.arc(200,200,120,0,Math.PI);
+		ctx.stroke();
+		
+	}
+	
+	</script>

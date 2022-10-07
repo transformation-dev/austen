@@ -1,0 +1,280 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dice Game</title>
+  <link rel="stylesheet" href="diceGame.css">
+  <style>
+    charset "utf-8";
+
+table{
+    padding: 2px;
+    border: solid;
+    border-color: #7c7c7c;
+}
+
+.message{
+    color: #CCCCCC;
+    text-align: center;
+    font-size: 20px;
+    padding: 10px;
+  }
+
+th{
+    color: #CCCCCC;
+    text-align: center;
+    font-size: 25px;
+    padding: 30px;
+    border-top: 4px dotted #7c7c7c;
+}
+p {
+    color: #CCCCCC;
+    text-align: center;
+    font-size: 20px;
+}
+
+td{
+    color: #CCCCCC;
+    text-align: center;
+    font-size: 40px;
+  }
+
+.row {
+	width: 480px;
+    height: 30px;
+	margin: 0 auto;
+	position: center;
+	float:none;
+}
+
+.dieB_1 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceBlue-1.png);
+    float:center;
+  }
+
+.dieB_2 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceBlue-2.png);
+    float:center;
+  }
+
+.dieB_3 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceBlue-3.png);
+    float:center;
+}
+
+.dieB_4 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceBlue-4.png);
+    float:center;
+}
+
+.dieB_5 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceBlue-5.png);
+    float:center;
+}
+
+.dieB_6 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceBlue-6.png);
+    float:center;
+}
+
+.dieR_1 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceRed-1.png);
+    float:center;
+  }
+
+.dieR_2 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceRed-2.png);
+    float:center;
+  }
+
+.dieR_3 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceRed-3.png);
+    float:center;
+}
+
+.dieR_4 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceRed-4.png);
+    float:center;
+}
+
+.dieR_5 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceRed-5.png);
+    float:center;
+}
+
+.dieR_6 {
+    width: 128px;
+    height: 128px;
+    background-image: url(images/diceRed-6.png);
+    float:center;
+} 
+</style> 
+</head>
+
+<body style="background-color:#202124;">
+  	<div class = "row">
+    </div>
+  <center>
+  <table>
+    <tr>
+      <td id="iL"><img src="images/dieBlue-1.png" class="dieL"></td>
+      <td id="iR"><img src="images/dieRed-1.png" class="dieR"></td>
+    </tr>
+    <tr>
+      <th>Player 1</th>
+      <th>Player 2</th>
+    </tr>
+    <tr>
+      <td id="p1_score">0</td>
+      <td id="p2_score">0</td>
+    </tr>
+    <tr>
+      <td colspan="2"><input type="button" value="Roll" onclick = "btnPress()"></td>
+      </tr>
+      <tr>
+        <td colspan="2" id="msg" class="message"> </td>
+      </tr>
+  </table>
+  
+  
+</center>
+
+    <script src = "diceGame.js"></script>
+</body>
+</html>
+
+ <script>
+ var 
+    leftDie = 0,
+    rightDie = 0,
+    limit = 50,
+    message = "default",
+    imageL,
+    imageR,
+    winner = "null",
+    scores =
+    {
+        p1: 0,
+        p2: 0
+    };
+
+
+// Initiates dice roll if game is active (i.e. if no player score has reached the 'limit' variable.)
+function btnPress(){
+    if (checkValues() == false) {
+        rollDie();
+    }
+}
+
+
+// Change the image src for each die by adding the corresponding value to the variable.
+function changeImages(l, r) {
+    imageL = document.getElementsByClassName("dieL");
+    imageR = document.getElementsByClassName("dieR");
+
+    imageL.src = "images/dieBlue-" + l + ".png";
+    imageR.src = "images/dieRed-" + r + ".png";
+
+    document.getElementById("iL").innerHTML = "<img src='" + imageL.src + "' class='dieL'>";
+    document.getElementById("iR").innerHTML = "<img src='" + imageR.src + "' class='dieR'>";
+
+    console.log("Left Image:" + imageL.src);
+    console.log("Right Image:" + imageR.src);
+    console.log("-------------------------------");
+}
+
+
+// Check if the game ended in a tie.
+function checkTie() {
+    if (scores.p1 == scores.p2) {
+        return true;
+    }
+}
+
+
+// Display the final message; which player won, or if it was a tie.
+function endScreen() {
+    if (checkTie() == true) {
+        message = "It's a tie, both players win!";
+        console.log("It's a tie, both players win!");
+    } else {
+        checkWinner();
+        message = winner + " is the winner!";
+        console.log(winner + " is the winner!");
+    }
+    document.getElementById("msg").innerHTML = message;
+}
+
+
+// Check which player has the higher score, assign Player # to 'winner' variable.
+function checkWinner() {
+    if (scores.p1 > scores.p2) {
+        winner = "Player 1";
+        return true;
+    } else{
+        winner = "Player 2";
+        return true;
+    }
+}
+
+
+// Returns a random number between 1 and 6
+function returnRand() {     
+    return Math.floor((Math.random() * 6) + 1);
+    return Math.floor((Math.random() * 6) + 1);
+}
+
+
+// Carries out the dice roll and associated functions.
+function rollDie() {   
+    leftDie = returnRand();
+    rightDie = returnRand();   //assigns random number to each die
+    scores.p1 += leftDie;
+    scores.p2 += rightDie;    //adds dice values to player scores
+    document.getElementById("p1_score").innerHTML = scores.p1;
+    document.getElementById("p2_score").innerHTML = scores.p2;  //writes scores to screen
+    noteValues();
+    changeImages(leftDie, rightDie);
+    checkValues();
+}
+
+
+// Checks whether a player score has surpassed the limit
+function checkValues() {
+    if (scores.p1 >= limit || scores.p2 >= limit) {
+        endScreen();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+// Writes current information to the console (dev purposes only)
+function noteValues() {
+   console.log("-------------------------------");
+    console.log("Left Die: " + leftDie + "  |  " + "Right Die: " + rightDie);
+    console.log ("Player 1: " + scores.p1 + "  |  " + "Player 2: " + scores.p2);
+}
+</script>
