@@ -1,31 +1,128 @@
 <html>
     <head>
         <style>
-           
+            * { margin: 50; padding: 10; }
+            body { color: #0d89e8; font: 14px Georgia, serif; }
+            h1 { color: #f20404;}
+            img:hover { filter: hue-rotate(90deg);}
         </style>
     </head>
-    <body>
-        <form id="myForm">
-            <input id="Name" type="input" value="Enter Your Name" /> <br />
-            
-            <input id="add" type="button" value="Enter" onclick="myFunction()"/> <br />
+    <body onLoad="getName()"> 
+        
+       
 
-        </form>
+        <h1>Logos of Branches of the US Military</h1>
+        <div id="output">No information</div>
 
-        <div id="output"/>
+        <h2>Images</h2>
+        <img 
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Mark_of_the_United_States_Army.svg/1920px-Mark_of_the_United_States_Army.svg.png" 
+          height="200" width="200"
+          onmouseover="showInfo(1)"
+          onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://media.defense.gov/2020/Jul/26/2002464378/600/400/0/200730-N-ZZ999-0001.JPG" 
+            height="200" width="200"
+            onmouseover="showInfo(2)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Mark_of_the_United_States_Air_Force.svg" 
+            height="200" width="200"
+            onmouseover="showInfo(3)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Seal_of_the_United_States_Coast_Guard.svg/1920px-Seal_of_the_United_States_Coast_Guard.svg.png" 
+            height="200" width="200"
+            onmouseover="showInfo(4)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://www.pvamu.edu/bcas/wp-content/uploads/sites/28/Marine-Corps-Logo.jpg" 
+            height="200" width="200"
+            onmouseover="showInfo(5)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://media.npr.org/assets/img/2020/01/24/space-force-logo_custom-fe81463b84fab8dc0bc09dc3f9417e32959c2680-s1600-c85.webp" 
+            height="200" width="200"
+            onmouseover="showInfo(6)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://media.defense.gov/2012/Jul/03/2000137376/1200/1200/0/120703-Z-JV725-001.JPG" 
+            height="200" width="200"
+            onmouseover="showInfo(7)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://media.defense.gov/2022/Aug/19/2003060727/1920/1080/0/220819-Z-TJ719-011.PNG" 
+            height="200" width="200"
+            onmouseover="showInfo(8)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://www.nationalguard.mil/portals/31/Images/Image%20Gallery/Graphics/NGB-seal-high.png" 
+            height="200" width="200"
+            onmouseover="showInfo(9)"
+            onmouseout="clearInfo()"
+        >
+        <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/ArmyAVNBranchPlaque.svg/1920px-ArmyAVNBranchPlaque.svg.png" 
+            height="200" width="200"
+            onmouseover="showInfo(10)"
+            onmouseout="clearInfo()"
+        >
+
 
 
     </body>
 
 </html>
 <script>
+    function getName() {
+        let name = prompt("What's your name:")
+        document.getElementById("output").innerHTML = "Hello " + name
+        window.status = name
+    }
+
+    let infoArray = [
+        "Army",
+        "Navy",
+        "Air Force",
+        "Coast Guard",
+        "Marine Corps",
+        "Space Force",
+        "Air National Guard",
+        "Army National Guard",
+        "Regular National Guard",
+        "Army Aviation",
+    ]
+
+    function showInfo(n) {
+        document.getElementById("output").innerHTML = infoArray[n - 1]
+    }
+
+    function clearInfo() {
+        document.getElementById("output").innerHTML = "No information"
+    }
+
+
+
     /* Performance Quiz #3
  
 Purpose: Learn how to utilize the browser objects.
  
- Using the onLoad event of the body tag, prompt the user for their name. This will involve creating a function to place your user input code as well as setting up an event in the body tag to trigger (connect) to the function. Write their name to the status bar of the browser window.
-  
- Then create 10 images using html <img> tags. When the user hovers over an image give them additional information about the image. You can do this with an alert box or another method if you prefer.
+ Using the onLoad event of the body tag, prompt the user for their name. 
+ This will involve creating a function to place your user input code as well as 
+ setting up an event in the body tag to trigger (connect) to the function. 
+ Write their name to the status bar of the browser window.
+ 
+ Then create 10 images using html <img> tags. When the user hovers over an 
+ image give them additional information about the image. You can do this 
+ with an alert box or another method if you prefer.
   
  Hint: setup an array to house your descriptions. Then when an image is clicked you can draw the information out of the appropriate array based on the JavaScript Images Array. */
 

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            margin: 5px;
+            padding: .3px;
+        }
+
+        #image-radio-buttons {
+            margin-left: 15px;
+        }
+
+        input[type="radio"],
+        label {
+            vertical-align: middle;
+        }
+
+        body {
+            color: #ffffff;
+            background: #000000;
+            /* background: grey; */
+            font-family: 'Courier New', monospace;
+        }
+
+        button {
+            font-family: 'Courier New', monospace;
+        }
+
+        ul:hover {
+            filter: hue-rotate(90deg);
+        }
+
+        #page {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="page">
+        <div>
+            <h1>Draw Something!</h1>
+            <form name="selections">
+                <h2>Background</h2>
+
+                <input type="radio" id="black" onclick="changeBackground('black')" name="background" value="black"
+                    onchange="changeFromBackgroundImage()">
+                <label for="black">Black</label><br>
+                <input type="radio" id="white" onclick="changeBackground('white')" name="background" value="white"
+                    onchange="changeFromBackgroundImage()" checked> <label for="white">White</label><br>
+                <input type="radio" id="blue" onclick="changeBackground('lightblue')" name="background" value="blue"
+                    onchange="changeFromBackgroundImage()">
+                <label for="blue">Blue</label><br>
+                <input type="radio" id="background-image" name="background" value="background-image"
+                    onclick="changeToBackgroundImage()"> <label for="image">Background Image</label><br>
+                <div id="background-radio-buttons">
+                    <input type="radio" id="background-1" name="backgroundpicture" value="background-image-1"
+                        disabled="true" onclick="setBackgroundTo('background-image-1')">
+                    <label for="background-1">
+                        <img id="background-image-1" height="50px" width="50px"
+                            src="https://at-cdn-s02.audiotool.com/2019-12-18/documents/3nmzzzafs/0/cover512x512-ce8e599111ac42eea4a08076e1b86801.jpg">
+                    </label>
+                    <input type="radio" id="background-2" name="backgroundpicture" value="background-image-2"
+                        disabled="true" onclick="setBackgroundTo('background-image-2')">
+                    <label for="background-2">
+                        <img id="background-image-2" height="50px" width="50px"
+                            src="https://ih1.redbubble.net/image.2209784092.4375/flat,128x,075,f-pad,128x128,f8f8f8.jpg">
+                    </label>
+                    <input type="radio" id="background-3" name="backgroundpicture" value="background-image-3"
+                        disabled="true" onclick="setBackgroundTo('background-image-3')">
+                    <label for="background-3">
+                        <img id="background-image-3" height="50px" width="50px"
+                            src="https://www.theplace2.ru/archive/00_icons/4269_icon_128.jpg">
+                    </label>
+                </div>
+
+                <h2>Shape</h2>
+
+                <input type="radio" id="circle" name="shape" value="circle" checked onchange="changeFromImage()"> <label
+                    for="circle">Circle</label><br>
+                <input type="radio" id="square" name="shape" value="square" onchange="changeFromImage()"> <label
+                    for="square">Square</label><br>
+                <input type="radio" id="triangle" name="shape" value="triangle" onchange="changeFromImage()"> <label
+                    for="triangle">Triangle</label><br>
+                <input type="radio" id="line" name="shape" value="line" onchange="changeFromImage()"> <label
+                    for="line">Line (mouse down, drag, mouse up)</label><br>
+                <input type="radio" id="image" name="shape" value="image" onchange="changeToImage()"> <label
+                    for="image">Image</label><br>
+
+                <div id="image-radio-buttons">
+                    <input type="radio" id="1" name="picture" value="image-1" disabled="true">
+                    <label for="image-1">
+                        <img id="image-1" height="50px" width="50px"
+                            src="https://at-cdn-s02.audiotool.com/2019-12-18/documents/3nmzzzafs/0/cover512x512-ce8e599111ac42eea4a08076e1b86801.jpg">
+                    </label>
+                    <input type="radio" id="2" name="picture" value="image-2" disabled="true">
+                    <label for="image-2">
+                        <img id="image-2" height="50px" width="50px"
+                            src="https://ih1.redbubble.net/image.2209784092.4375/flat,128x,075,f-pad,128x128,f8f8f8.jpg">
+                    </label>
+
+                    <input type="radio" id="3" name="picture" value="image-3" disabled="true">
+                    <label for="image-3">
+                        <img id="image-3" height="50px" width="50px"
+                            src="https://www.theplace2.ru/archive/00_icons/4269_icon_128.jpg">
+                    </label>
+                </div>
+
+                <h2>Color</h2>
+
+                <input type="radio" id="red" name="color" value="red"> <label for="red">Red</label><br>
+                <input type="radio" id="yellow" name="color" value="yellow"> <label for="yellow">Yellow</label><br>
+                <input type="radio" id="blue" name="color" value="blue" checked> <label for="blue">Blue</label><br>
+
+                <h2>Size</h2>
+
+                <input type="radio" id="small" name="size" value="10"> <label for="small">Small</label><br>
+                <input type="radio" id="medium" name="size" value="20" checked> <label for="medium">Medium</label><br>
+                <input type="radio" id="large" name="size" value="50"> <label for="large">Large</label><br>
+
+            </form>
+
+            <button onClick="clearCanvas()">Clear Canvas</button>
+
+        </div>
+        <canvas id="theCanvas" onmousedown="drawHere()" onmouseup="endLine()" width="800" height="800"
+            style="border:1px solid red; background-color: white;">
+        </canvas>
+    </div>
+
+</body>
+
+</html>
+<script>
+    function setBackgroundTo(imageID) {
+        console.log(imageID);
+        let url = document.getElementById(imageID).src;
+        console.log('url', url)
+        canvas = document.getElementById("theCanvas");
+        canvas.style = `background: url('${url}'); background-size: 800px;`;
+        return
+        let rect = canvas.getBoundingClientRect();
+        let ctx = canvas.getContext("2d")
+        let img = document.getElementById(imageID);
+        ctx.drawImage(img, 0, 0, 800, 800);
+    }
+
+    function changeToImage() {
+        let one = document.getElementById("1")
+        one.disabled = false;
+        one.checked = true;
+        document.getElementById("2").disabled = false;
+        document.getElementById("3").disabled = false;
+    }
+
+    function changeToBackgroundImage() {
+        let one = document.getElementById("background-1")
+        one.disabled = false;
+        one.checked = true;
+        document.getElementById("background-2").disabled = false;
+        document.getElementById("background-3").disabled = false;
+        setBackgroundTo('background-image-1');
+    }
+
+    function changeFromImage() {
+        let one = document.getElementById("1")
+        one.disabled = true;
+        one.checked = false;
+        let two = document.getElementById("2")
+        two.disabled = true;
+        two.checked = false;
+        let three = document.getElementById("3")
+        three.disabled = true;
+        three.checked = false;
+    }
+
+    function changeFromBackgroundImage() {
+        let one = document.getElementById("background-1")
+        one.disabled = true;
+        one.checked = false;
+        let two = document.getElementById("background-2")
+        two.disabled = true;
+        two.checked = false;
+        let three = document.getElementById("background-3")
+        three.disabled = true;
+        three.checked = false;
+    }
+
+    function clearCanvas() {
+        let canvas = document.getElementById("theCanvas");
+        let ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+
+    function changeBackground(color) {
+        document.getElementById("theCanvas").style = `border:1px solid red; background-color: ${color};`;  // template literal
+        // document.getElementById("theCanvas").style = "border:1px solid red; background-color: " + color + ";";
+    }
+
+    let lineStartX = 0;
+    let lineStartY = 0;
+    let lineInProgress = false;
+
+    function endLine() {
+        if (lineInProgress) {
+            canvas = document.getElementById("theCanvas");
+            let rect = canvas.getBoundingClientRect();
+            let ctx = canvas.getContext("2d")
+
+            // gets mouse location
+            let x = event.clientX - rect.left;
+            let y = event.clientY - rect.top;
+
+            // sets line width and color
+            let color = document.forms.selections.color.value;
+            ctx.strokeStyle = color;
+            let size = document.forms.selections.size.value;
+            ctx.lineWidth = size / 10;
+
+            // draws line
+            ctx.beginPath();
+            ctx.moveTo(lineStartX, lineStartY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+    }
+
+    function drawHere(e) {
+        let size = document.forms.selections.size.value;
+        let color = document.forms.selections.color.value;
+        let shape = document.forms.selections.shape.value;
+        canvas = document.getElementById("theCanvas");
+        let rect = canvas.getBoundingClientRect();
+        let x = event.clientX - rect.left;
+        let y = event.clientY - rect.top;
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = color;
+
+        lineInProgress = false;
+
+        if (shape === 'square') {
+            ctx.fillRect(x, y, size, size);
+        } else if (shape === 'circle') {
+            ctx.beginPath();
+            ctx.arc(x, y, size / 2, 0, 2 * Math.PI);
+            ctx.fill();
+        } else if (shape === 'triangle') {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + (size / 1.5), y + 1 * size);
+            ctx.lineTo(x - (size / 1.5), y + 1 * size);
+            ctx.closePath();
+            ctx.fill();
+        } else if (shape === 'line') {
+            lineStartX = x;
+            lineStartY = y;
+            lineInProgress = true;
+        } else if (shape === 'image') {
+            let imageID = document.forms.selections.picture.value;
+            let img = document.getElementById(imageID);
+            ctx.drawImage(img, x, y, size, size)
+        } else {
+            alert('Error: unsupported shape: ' + shape);
+        }
+    }
+</script>
